@@ -209,27 +209,31 @@ python manage.py runserver
     Q: What color is the sky ?
     A: One of the deputies is everywhere.
 
-## Pretrained model
+## 미리 학습된 모델
 
-You can find a pre-trained model [here](https://drive.google.com/file/d/0Bw-phsNSkq23OXRFTkNqN0JGUU0/view?usp=sharing), trained of the default corpus. To use it:
- 1. Extract the zip file inside `DeepQA/save/`
- 2. Copy the preprocessed dataset from `save/model-pretrainedv2/dataset-cornell-old-lenght10-filter0-vocabSize0.pkl` to `data/samples/`.
- 3. Run `./main.py --modelTag pretrainedv2 --test interactive`.
+기본 말뭉치에 의해 미리 학습된 [모델](https://drive.google.com/file/d/0Bw-phsNSkq23OXRFTkNqN0JGUU0/view?usp=sharing)을 사용하실 수 있습니다. 다음과 같이 사용하실 수 있습니다:
+ 1. `DeepQA/save/` 내부 zip 파일의 압축을 풉니다.
+ 2. `save/model-pretrainedv2/dataset-cornell-old-lenght10-filter0-vocabSize0.pkl`에서 전처리 된 데이터 세트를 `data/samples/`로 복사합니다.
+ 3. `./main.py --modelTag pretrainedv2 --test interactive`를 실행합니다.
 
-Thanks to Nicholas C., [here](https://drive.google.com/drive/folders/0Bw-phsNSkq23c29ZQ2N6X3lyc1U?usp=sharing) ([original](https://mcastedu-my.sharepoint.com/personal/nicholas_cutajar_a100636_mcast_edu_mt/_layouts/15/guestaccess.aspx?folderid=077576c4cf9854642a968f67909380f45&authkey=AVt2JWMPkf2R_mWBpI1eAUY)) are some additional pre-trained models (compatible with TF 1.2) for diverse datasets. The folder also contains the pre-processed dataset for Cornell, OpenSubtitles, Ubuntu and Scotus (to move inside `data/samples/`). Those are required is you don't want to process the datasets yourself.
+Nicholas C. 의 도움으로, [여기서](https://drive.google.com/drive/folders/0Bw-phsNSkq23c29ZQ2N6X3lyc1U?usp=sharing) ([오리지널](https://mcastedu-my.sharepoint.com/personal/nicholas_cutajar_a100636_mcast_edu_mt/_layouts/15/guestaccess.aspx?folderid=077576c4cf9854642a968f67909380f45&authkey=AVt2JWMPkf2R_mWBpI1eAUY)) 다양한 데이터 세트를 위한 미리 학습 된 모델(텐서플로우 v1.2와 호환가능)을 사용하실 수 있습니다. 이 폴더는 전처리 된 Cornell, OpenSubtitles, Ubuntu and Scotus 데이터 세트가 포함되어 있습니다 (to move inside `data/samples/`). 직접 데이터 세트를 처리하고 싶지 않으실 경우 사용하실 수 있습니다.
 
-If you have a high-end GPU, don't hesitate to play with the hyper-parameters/corpus to train a better model. From my experiments, it seems that the learning rate and dropout rate have the most impact on the results. Also if you want to share your models, don't hesitate to contact me and I'll add it here.
+성능이 좋은 GPU를 사용하신다면 변수나 말뭉치를 간단히 조정하여 더 좋은 모델로 학습시킬 수 있습니다. 제 경험으로는 학습률이나 드롭아웃 비율이 결과에 가장 큰 영향을 미치는 것으로 보였습니다. 혹시 모델을 공유하고 싶으시다면 부담 없이 저에게 연락하세요. 여기에 모델을 공유하겠습니다.
 
-## Improvements
+## 발전 가능성
 
-In addition to trying larger/deeper model, there are a lot of small improvements which could be tested. Don't hesitate to send a pull request if you implement one of those. Here are some ideas:
 
-* For now, the predictions are deterministic (the network just take the most likely output) so when answering a question, the network will always gives the same answer. By adding a sampling mechanism, the network could give more diverse (and maybe more interesting) answers. The easiest way to do that is to sample the next predicted word from the SoftMax probability distribution. By combining that with the `loop_function` argument of `tf.nn.seq2seq.rnn_decoder`, it shouldn't be too difficult to add. After that, it should be possible to play with the SoftMax temperature to get more conservative or exotic predictions.
-* Adding attention could potentially improve the predictions, especially for longer sentences. It should be straightforward by replacing `embedding_rnn_seq2seq` by `embedding_attention_seq2seq` on `model.py`.
-* Having more data usually don't hurt. Training on a bigger corpus should be beneficial. [Reddit comments dataset](https://www.reddit.com/r/datasets/comments/59039y/updated_reddit_comment_dataset_up_to_201608/) seems the biggest for now (and is too big for this program to support it). Another trick to artificially increase the dataset size when creating the corpus could be to split the sentences of each training sample (ex: from the sample `Q:Sentence 1. Sentence 2. => A:Sentence X. Sentence Y.` we could generate 3 new samples: `Q:Sentence 1. Sentence 2. => A:Sentence X.`, `Q:Sentence 2. => A:Sentence X. Sentence Y.` and `Q:Sentence 2. => A:Sentence X.`. Warning: other combinations like `Q:Sentence 1. => A:Sentence X.` won't work because it would break the transition `2 => X` which links the question to the answer)
-* The testing curve should really be monitored as done in my other [music generation](https://github.com/Conchylicultor/MusicGenerator) project. This would greatly help to see the impact of dropout on overfitting. For now it's just done empirically by manually checking the testing prediction at different training steps.
-* For now, the questions are independent from each other. To link questions together, a straightforward way would be to feed all previous questions and answer to the encoder before giving the answer. Some caching could be done on the final encoder stated to avoid recomputing it each time. To improve the accuracy, the network should be retrain on entire dialogues instead of just individual QA. Also when feeding the previous dialogue to the encoder, new tokens `<Q>` and `<A>` could be added so the encoder knows when the interlocutor is changing. I'm not sure though that the simple seq2seq model would be sufficient to capture long term dependencies between sentences. Adding a bucket system to group similar input lengths together could greatly improve training speed.
+모델의 크기나 깊이 외 다양한 방법으로 시도해 보실 수 있습니다. 구현하시면 부담 없이 pull request 를 보내주세요. 다음과 같은 예시 아이디어들이 있습니다:
 
-## Credits
+*  현 모델의 예측은 결정론적이므로(가장 가능성이 높은 대답을 출력) 똑같은 질문에 항상 동일한 대답을 할 것입니다. 샘플링 메커니즘을 추가한다면 훨신 다양하고 (더 재미있을 수 있는) 답을 제공할 제공할 수 있습니다. 가장 쉬운방법은 SoftMax 확률 분포에서 예측 된 다음 단어를 샘플링 하는 것입니다. `tf.nn.seq2seq.rnn_decoder`의`loop_function`을 사용하면 많이 어렵지 않을 것입니다. 이 후 SoftMax를 가지고 실험하시며 더 보수적이거나 신기한 예측을 생성시킬 수 있습니다.
 
-Credits for this code goes to [conchylucultor](https://github.com/Conchylicultor/DeepQA). I've merely created a wrapper to get people started. 
+* 어텐션을 추가하면 더 긴 문장에 특히 더 예측을 향상시킬 수 있습니다. 'embedding_rnn_seq2seq`을 `model.py`의 `embedding_attention_seq2seq`로 바꾸면 간단합니다.
+
+
+* 데이터가 많으면 보통 더 결과가 좋습니다. 더 큰 말뭉치에 학습을 시키는 것이기 때문입니다. [Reddit 댓글 데이터 세트] (https://www.reddit.com/r/datasets/comments/59039y/updated_reddit_comment_dataset_up_to_201608/)는 현재 가장 큰 말뭉치로 보입니다 (이 프로그램에 사용하기엔 크기가 커서 부적절합니다). 혹은 말뭉치를 만들 때 각 학습 샘플의 문장을 나눠서 데이터 세트의 크기를 인위적으로 늘릴수있습니다 (예: 샘플 '질문: 문장 1. 문장 2 => 답변: 문장 X. 문장 Y'로 셈플 세 개를 만들 수 있습니다: '질문: 문장1. 문장 2 => 답변: 문장 X', '질문: 문장 2 => 답변: 문장 X, 문장 Y', '질문: 문장 2 => 답변: 문장 X') 경고 : '질문: 문장 1. => 답변: 문장 X.'와 같은 조합은 '2 => X' 처럼 질문에서 답변으로의 전환을 깨뜨리기 때문에 작동하지 않습니다)
+* 테스트 곡선은 제 [음악 생성](https://github.com/Conchylicultor/MusicGenerator) 프로젝트에서 처럼 모니터 되는 것이 좋습니다. 이럴 경우 드롭아웃이 오버피팅에 미치는 효과를 관찰하실 수 있습니다. 일단은 단순히 각 학습 스텝에서 예측된 결과를 체크하며 진행합니다. 
+* 현재 모든 질문은 서로 독립적입니다. 질문을 서로 연결하려면 대답을하기 전에 이전 질문을 모두 입력하고 인코더가 응답하게 하는 것이 가장 간단합니다. 마지막 엔코더에서 캐시를 저장하면 매번 다시 계산하지 않으셔도 됩니다. 정확성을 높이려면 개별 질문/대답 보다는 전체 대화를 학습시키는 것이 좋습니다. 또한 이전 대화를 인코더에 입력할 때 '<Q'>, '<A>' 토큰을 추가한다면 인코더가 화자가 바뀔 때를 파악할 수 있습니다. 간단한 seq2seq 모델이 문장 사이의 장기 의존성을 포착하기 충분할 지는 모르겠습니다. 비슷한 길이의 입력 문장을 그룹화하는 버킷 시스템을 추가하면 학습 속도가 크게 향상 될 수 있습니다.
+   
+## 감사의 말 
+
+[conchylucultor](https://github.com/Conchylicultor/DeepQA)에 감사의 말씀을 전합니다. 이 코드는 제가 조금만 변형한 것입니다.
