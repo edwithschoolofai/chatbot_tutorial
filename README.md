@@ -19,61 +19,61 @@
 
 ## Presentation
 
-이 프로젝트는[A Neural Conversational Model](http://arxiv.org/abs/1506.05869) (혹은 구글 챗봇)의 결과를 재현합니다. 순환신경망(RNN의 seq2seq 모델)을 통해 다음 문장을 예측합니다. 파이썬 및 텐서플로우를 사용합니다.
+이 프로젝트는 [A Neural Conversational Model](http://arxiv.org/abs/1506.05869) (혹은 구글 챗봇)의 결과를 재현합니다. 코드를 통해 순환신경망(RNN의 seq2seq 모델)을 통해 다음 문장을 예측하실 수 있으며, 파이썬과 텐서플로우를 사용합니다.
 
-프로그램에서 말뭉치를 로딩하는 부분은 [macournoyer](https://github.com/macournoyer)의 Torch [neuralconvo](https://github.com/macournoyer/neuralconvo)에서 영감을 얻었습니다.
+프로그램에서 말뭉치를 로딩하는 부분은 [macournoyer](https://github.com/macournoyer)의 Torch [neuralconvo](https://github.com/macournoyer/neuralconvo)에서 변형하였습니다.
 
-현재 DeepQA는 다음과 같은 대화 말뭉치를 지원합니다:
+현재 DeepQA는 다음과 같은 대화 말뭉치를 지원합니다.
  * [코넬 영화 대사](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) 말뭉치 (기본). 이 저장소를 복제하시면 자동으로 포함됩니다.
  * [OpenSubtitles](http://opus.lingfil.uu.se/OpenSubtitles.php) ([Eschnou](https://github.com/eschnou)에게 감사드립니다). (잡음이 더 많지만) 훨씬 큰 말뭉치입니다. 사용하려면 [다음 사용법](data/opensubs/) 을 보시고 `--corpus opensubs`를 쓰세요.
  * 대법원 대화 자료 ([julien-c](https://github.com/julien-c)에게 감사드립니다). `--corpus scotus`를 쓰시면 사용 가능합니다. See the [instructions](data/scotus/) for installation.
  * [우분투 대화 말뭉치](https://arxiv.org/abs/1506.08909) ([julien-c](https://github.com/julien-c)에게 감사드립니다). `--corpus ubuntu`를 쓰시면 사용 가능합니다. 다음 [사용법](data/ubuntu/)을 보고 설치하실 수 있습니다.
  * 여러분의 데이터([julien-c](https://github.com/julien-c)에게 감사드립니다)를 다음과 같은 [간단한 대화형식](data/lightweight)으로 쓰실 수 있습니다.
 
-학습의 속도를 올리기 위해 미리 학습된 단어 임베딩([Eschnou](https://github.com/eschnou)에게 감사드립니다)를 쓸 수 있습니다. [](data/embeddings).
+학습의 속도를 올리기 위해 미리 학습된 단어 임베딩([Eschnou](https://github.com/eschnou)에게 감사드립니다)를  수 있습니다. [](data/embeddings).
 
-## Installation
+## 설치
 
-The program requires the following dependencies (easy to install using pip: `pip3 install -r requirements.txt`):
- * python 3.5
- * tensorflow (tested with v1.0)
- * numpy
- * CUDA (for using GPU)
- * nltk (natural language toolkit for tokenized the sentences)
- * tqdm (for the nice progression bars)
+이 프로그램은 다음과 같은 의존성을 요구합니다 (pip을 통해 쉽게 설치하실 수 있습니다: `pip3 install -r requirements.txt`):
+ * 파이썬 3.5
+ * 텐서플로우 (v1.0로 실행되었습니다)
+ * 넘파이
+ * CUDA (GPU 사용 목적)
+ * nltk (문장의 토큰화를 위한 자연어 처리 툴킷)
+ * tqdm (진행 표시줄 목적)
 
-You might also need to download additional data to make nltk work.
+nltk의 작동을 위해 추가 의존성을 설치해야 하실 수 있습니다.
 
 ```
 python3 -m nltk.downloader punkt
 ```
 
-The Cornell dataset is already included. For the other datasets, look at the readme files into their respective folders (inside `data/`).
+코넬 데이터 세트는 이미 포함되어 있습니다. 다른 데이터 세트는 데이터 폴더(`data/`)내 readme를 참고하시기 바랍니다.
 
-The web interface requires some additional packages:
- * django (tested with 1.10)
+웹 인터페이스를 사용하시기 위해 다음 패키지가 필요합니다:
+ * 장고 (v1.10로 실행되었습니다)
  * channels
- * Redis (see [here](http://redis.io/topics/quickstart))
- * asgi_redis (at least 1.0)
+ * Redis ([여기](http://redis.io/topics/quickstart)를 참고하세요)
+ * asgi_redis (v1.0 이상)
 
-A Docker installation is also available. More detailed instructions [here](docker/README.md).
+도커를 사용해서도 설치를 하실 수 있습니다. 자세한 [사용법](docker/README.md)을 참고하세요.
 
-## Running
+## 실행
 
-### Chatbot
+### 챗봇
 
-To train the model, simply run `main.py`. Once trained, you can test the results with `main.py --test` (results generated in 'save/model/samples_predictions.txt') or `main.py --test interactive` (more fun).
+`main.py`를 실행하시면 모델을 학습시키실 수 있습니다. 학습 후 `main.py --test` (결과는 'save/model/samples_predictions.txt'에 저장됩니다) 나 `main.py --test interactive` (더 재미있습니다) 를 통해 결과를 확인하실 수 있습니다.
 
 Here are some flags which could be useful. For more help and options, use `python main.py -h`:
- * `--modelTag <name>`: allow to give a name to the current model to differentiate between them when testing/training.
- * `--keepAll`: use this flag when training if when testing, you want to see the predictions at different steps (it can be interesting to see the program changes its name and age as the training progress). Warning: It can quickly take a lot of storage space if you don't increase the `--saveEvery` option.
- * `--filterVocab 20` or `--vocabularySize 30000`: Limit the vocabulary size to and optimize the performances and memory usage. Replace the words used less than 20 times by the `<unknown>` token and set a maximum vocabulary size.
- * `--verbose`: when testing, will print the sentences as they are computed.
- * `--playDataset`: show some dialogue samples from the dataset (can be use conjointly with `--createDataset` if this is the only action you want to perform).
+ * `--modelTag <name>`: 현 모델의 학습/테스트 버젼 구분을 위해 이름을 바꿀 수 있습니다.
+ * `--keepAll`: 테스트 단계에서 스텝별 예측(학습이 진행되며 프로그램이 이름과 나이를 바꾸는 것이 재미있을 수 있습니다)을 보시고 싶으실 경우 학습 단계에서 사용하세요. 경고 : `--saveEvery` 를 높이지 않으면 저장 공간을 많이 차지할 수 있습니다.
+ * `--filterVocab 20` 또는 `--vocabularySize 30000`: 어휘 크기를 제한하여 퍼포멘스와 메모리 사용을 최적화 하실 수 있습니다. 20회 미만 사용된 단어를 `<unknown>` 토큰으로 대체하시고 최대 어휘 크기를 설정하십시오.
+ * `--verbose`: 테스트 단계에서 때 매 문장이 계산되는 즉시 출력됩니다.
+ * `--playDataset`: 데이터 세트의 대화 샘플을 보여줍니다 (수행 하실 유일한 명령일 경우 `--createDataset` 와 함께 사용하실 수 있습니다).
 
-To visualize the computational graph and the cost with [TensorBoard](https://www.tensorflow.org/how_tos/summaries_and_tensorboard/), just run `tensorboard --logdir save/`.
+[TensorBoard](https://www.tensorflow.org/how_tos/summaries_and_tensorboard/)를 통해 계산 그래프와 비용을 보시려면 `tensorboard --logdir save/`를 실행하십시오.
 
-By default, the network architecture is a standard encoder/decoder with two LSTM layers (hidden size of 256) and an embedding size for the vocabulary of 32. The network is trained using ADAM. The maximum sentence length is set to 10 words, but can be increased.
+기본적으로 네트워크 구조는 두 개의 LSTM(은닉층의 크기=256)과 임베딩(어휘 개수=32)을 가진 표준 인코더/디코더입니다. ADAM을 통해 네트워크를 학습시킵니다. 문장 당 최대 단어 개수는 10이지만, 그 이상 또한 .
 
 ### Web interface
 
