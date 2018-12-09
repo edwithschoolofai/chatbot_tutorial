@@ -1,6 +1,6 @@
 ## 간단한 설명
 
-이 코드는 Siraj Raval 의 유투브 비디오 ["마케팅을 위한 챗봇"](https://youtu.be/PXJtFc8DjsE)에 설명 된 코드입니다.
+이 코드는 Siraj Raval의 유튜브 비디오 ["마케팅을 위한 챗봇"](https://youtu.be/PXJtFc8DjsE)에 설명 된 코드입니다.
 
 # Deep Q&A
 [![Join the chat at https://gitter.im/chatbot-pilots/DeepQA](https://badges.gitter.im/chatbot-pilots/DeepQA.svg)](https://gitter.im/chatbot-pilots/DeepQA?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -18,18 +18,18 @@
 
 ## 소개
 
-이 프로젝트는 [A Neural Conversational Model](http://arxiv.org/abs/1506.05869) (혹은 구글 챗봇)의 결과를 재현합니다. 코드를 통해 순환신경망(RNN의 seq2seq 모델)을 통해 다음 문장을 예측하실 수 있으며, 파이썬과 텐서플로우를 사용합니다.
+이 프로젝트는 [A Neural Conversational Model](http://arxiv.org/abs/1506.05869)(혹은 구글 챗봇)의 결과를 재현합니다. 순환신경망(RNN의 seq2seq 모델)을 통해 다음 문장을 예측하실 수 있으며, 파이썬과 텐서플로우를 사용합니다.
 
 프로그램에서 말뭉치를 로딩하는 부분은 [macournoyer](https://github.com/macournoyer)의 Torch [neuralconvo](https://github.com/macournoyer/neuralconvo)에서 변형하였습니다.
 
 현재 DeepQA는 다음과 같은 대화 말뭉치를 지원합니다.
- * [코넬 영화 대사](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) 말뭉치 (기본). 이 저장소를 복제하시면 자동으로 포함됩니다.
- * [OpenSubtitles](http://opus.lingfil.uu.se/OpenSubtitles.php) ([Eschnou](https://github.com/eschnou)에게 감사드립니다). (잡음이 더 많지만) 훨씬 큰 말뭉치입니다. 사용하려면 [다음 사용법](data/opensubs/) 을 보시고 `--corpus opensubs`를 쓰세요.
- * 대법원 대화 자료 ([julien-c](https://github.com/julien-c)에게 감사드립니다). `--corpus scotus`를 쓰시면 사용 가능합니다. [사용법](data/scotus/) 을 보시고 설치하세요.
- * [우분투 대화 말뭉치](https://arxiv.org/abs/1506.08909) ([julien-c](https://github.com/julien-c)에게 감사드립니다). `--corpus ubuntu`를 쓰시면 사용 가능합니다. 다음 [사용법](data/ubuntu/)을 보고 설치하실 수 있습니다.
+ * [코넬 영화 대사](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) 말뭉치(기본). 이 저장소를 복제하시면 자동으로 포함됩니다.
+ * [OpenSubtitles](http://opus.lingfil.uu.se/OpenSubtitles.php)([Eschnou](https://github.com/eschnou)에게 감사드립니다). (잡음이 더 많지만) 훨씬 큰 말뭉치입니다. 사용하려면 [다음 사용법](data/opensubs/)을 보시고 `--corpus opensubs`를 쓰세요.
+ * 대법원 대화 자료 ([julien-c](https://github.com/julien-c)에게 감사드립니다). `--corpus scotus`를 쓰시면 사용 가능합니다. [사용법](data/scotus/)을 보시고 설치하세요.
+ * [우분투 대화 말뭉치](https://arxiv.org/abs/1506.08909)([julien-c](https://github.com/julien-c)에게 감사드립니다). `--corpus ubuntu`를 쓰시면 사용 가능합니다. 다음 [사용법](data/ubuntu/)을 보고 설치하실 수 있습니다.
  * 여러분의 데이터([julien-c](https://github.com/julien-c)에게 감사드립니다)를 다음과 같은 [간단한 대화형식](data/lightweight)으로 쓰실 수 있습니다.
 
-학습의 속도를 올리기 위해 미리 학습된 단어 임베딩([Eschnou](https://github.com/eschnou)에게 감사드립니다)를  수 있습니다. [더보기](data/embeddings).
+학습의 속도를 올리기 위해 미리 학습된 단어 임베딩([Eschnou](https://github.com/eschnou)에게 감사드립니다)을 사용할 수도 있습니다. [더 보기](data/embeddings).
 
 ## 설치
 
@@ -55,7 +55,7 @@ python3 -m nltk.downloader punkt
  * Redis ([여기](http://redis.io/topics/quickstart)를 참고하세요)
  * asgi_redis (v1.0 이상)
 
-도커를 사용해서도 설치를 하실 수 있습니다. 자세한 [사용법](docker/README.md)을 참고하세요.
+도커를 사용해서도 설치하실 수 있습니다. 자세한 [사용법](docker/README.md)을 참고하세요.
 
 ## 실행
 
