@@ -67,17 +67,17 @@ python3 -m nltk.downloader punkt
 Here are some flags which could be useful. For more help and options, use `python main.py -h`:
  * `--modelTag <name>`: 현 모델의 학습/테스트 버젼 구분을 위해 이름을 바꿀 수 있습니다.
  * `--keepAll`: 테스트 단계에서 스텝별 예측(학습이 진행되며 프로그램이 이름과 나이를 바꾸는 것이 재미있을 수 있습니다)을 보시고 싶으실 경우 학습 단계에서 사용하세요. 경고 : `--saveEvery` 를 높이지 않으면 저장 공간을 많이 차지할 수 있습니다.
- * `--filterVocab 20` 또는 `--vocabularySize 30000`: 어휘 크기를 제한하여 퍼포멘스와 메모리 사용을 최적화 하실 수 있습니다. 20회 미만 사용된 단어를 `<unknown>` 토큰으로 대체하시고 최대 어휘 크기를 설정하십시오.
+ * `--filterVocab 20` 또는 `--vocabularySize 30000`: 어휘 크기를 제한하여 퍼포멘스와 메모리 사용을 최적화 하실 수 있습니다. 20회 미만 사용된 단어를 `<unknown>` 토큰으로 대체하시고 최대 어휘 크기를 설정하.
  * `--verbose`: 테스트 단계에서 때 매 문장이 계산되는 즉시 출력됩니다.
  * `--playDataset`: 데이터 세트의 대화 샘플을 보여줍니다 (수행 하실 유일한 명령일 경우 `--createDataset` 와 함께 사용하실 수 있습니다).
 
-[TensorBoard](https://www.tensorflow.org/how_tos/summaries_and_tensorboard/)를 통해 계산 그래프와 비용을 보시려면 `tensorboard --logdir save/`를 실행하십시오.
+[텐서보드](https://www.tensorflow.org/how_tos/summaries_and_tensorboard/)를 통해 계산 그래프와 비용을 보시려면 `tensorboard --logdir save/`를 실행하세요.
 
 기본적으로 네트워크 구조는 두 개의 LSTM(은닉층의 크기=256)과 임베딩(어휘 개수=32)을 가진 표준 인코더/디코더입니다. ADAM을 통해 네트워크를 학습시킵니다. 문장 당 최대 단어 개수는 10이지만, 그 이상 또한 .
 
-### Web interface
+### 웹 인터페이스
 
-Once trained, it's possible to chat with it using a more user friendly interface. The server will look at the model copied to `save/model-server/model.ckpt`. The first time you want to use it, you'll need to configure it with:
+학습 한 후 더 친숙한 인터페이스를 통해 프로그램과 채팅이 가능합니다. 서버는 `save/model-server/model.ckpt`에 저장된 모델을 사용할 것입니다. 처음 사용하실 때 다음과 같이 환경 설정을 하시면 됩니다:
 
 ```bash
 export CHATBOT_SECRET_KEY="my-secret-key"
@@ -86,7 +86,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-Then, to launch the server locally, use the following commands:
+로컬 서버에서 론치하실 경우 다음 명령어를 입력하세요:
 
 ```bash
 cd chatbot_website/
@@ -94,14 +94,14 @@ redis-server &  # Launch Redis in background
 python manage.py runserver
 ```
 
-After launch, the interface should be available on [http://localhost:8000/](http://localhost:8000/). If you want to deploy the program on a server, use `python manage.py runserver 0.0.0.0` instead. More info [here](https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/).
+서버 론치 후, [http://localhost:8000/](http://localhost:8000/)에서 인터페이스가 보실 수 있습니다. 프로그램을 서버에서 디플로이 하려면 `python manage.py runserver 0.0.0.0` 을 실행하세요. [더보기](https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/).
 
 [![Chatbot web interface](chatbot_miniature.png)](http://e-pot.xyz/cv/chatbot.png)
 
-## Results
+## 결과
 
-Surprisingly, it's possible to get some results after only 1 or 2 hours of training (on a GeForce GT 740M), by drastically reducing the input sequence to 5 words and output to 3 (plus the `go` and `eos` tokens) and by using a small embedding size (something like 25). Since then I modified the code and now the output length has to match the input one but you can still reproduce the original results, using [this version](https://github.com/Conchylicultor/DeepQA/tree/92863e2929580818f866f16969909fe2093d41d1).
-Of course, the network won't be really chatty:
+신기하게도, 한 두 시간만 학습 (GeForce GT 740로 학습)을 해도 어느정도의 결과를 얻을 수 있습니다. 단 시간에 이러한 결과를 얻으려면 입력 시퀀스의 단어를 5개로, 출력을 3개(`go` 와 `eos`토큰 또한 추가로 포함)로 제한하고 작은 임베딩 사이즈(대략 25)를 사용해야 합니다. 이후 출력값과 입력값이 어느정도 비슷한 길이가 되도록 코드를 수정했지만 [이 버젼](https://github.com/Conchylicultor/DeepQA/tree/92863e2929580818f866f16969909fe2093d41d1)을 통해 처음 결과를 재현하실 수 있습니다.
+물론, 이러한 초기 단계의 네트워크는 아직 많은 대화를 할 수 없습니다:
 
     Q: Hi
     A: Hi.
@@ -124,7 +124,7 @@ Of course, the network won't be really chatty:
     Q: That's not nice
     A: Yeah.
 
-Here is some case where it fails:
+다음과 같은 실패 케이스 또한 있습니다:
 
     Q: Who is Laura ?
     A: My brother.
@@ -141,7 +141,7 @@ Here is some case where it fails:
     Q: Two plus two
     A: Manny...
 
-With longer sentences, the network is much slower to train. After 250000 iterations with maxLength=10, the network still mainly gives evasive answers (by answering most of the open ended questions by 'I don't know') but it seems to have integrated some basic semantic:
+문장이 길어질수록 네트워크는 훨씬 느리게 학습됩니다. 네트워크를 maxLength = 10으로 250000회 학습한 후에도 대부분 회피형 응답(예: 개방형 질문에 '잘 모르겠습니다'로 대답)을 합니다. 하지만 근본적인 의미를 어느정도 파악한 것으로 보입니다.
 
     Q: When are the fireworks ?
     A: Tomorrow.
@@ -167,7 +167,7 @@ With longer sentences, the network is much slower to train. After 250000 iterati
     Q: When were you born ?
     A: Soon.
 
-As shown on the last questions, the network still does some confusion between the genders and the present/future. I also tried some deeper philosophical questions with more or less success.
+마지막 질문에서 볼 수 있듯이, 네트워크는 성별과 현재/미래를 아직 구분하기 어려워합니다. 더 심도있는 철학적인 질문 또한 어느정도 비슷한 결과를 보입니다.
 
     Q: What is the purpose of being intelligent ?
     A: The man are obsolete.
@@ -184,7 +184,7 @@ As shown on the last questions, the network still does some confusion between th
     Q: What happens if machines can think ?
     A: I think I'll just lie with you.
 
-The model I trained is quite limited by the embedding size I put and by its size, and by the training corpus size. Its 'thought vector' is also probably too small to answer the kind of following:
+이 모델은 임베딩 사이즈와 학습용 말뭉치 크기에 의해 상당히 제한됩니다. 모델의 '생각할 수 있는 벡터'가 너무 작아서 다음과 같은 질문에 제한된 답을 제공하는 것으로 보입니다.
 
     Q: My name is David. What is my name ?
     A: Debbie.
@@ -201,7 +201,7 @@ The model I trained is quite limited by the embedding size I put and by its size
     Q: Do you prefer football or soccer ?
     A: Whiskey.
 
-It also seems to overfit as sometimes it will just pop out sentences from its training set unrelated to the question. Adding some dropout should reduce the issue.
+또한 때로 질문과 무관한 답을 하는것으로 보아, 학습 과정에서 오버피팅이 되는 것으로 보입니다. 드롭 아웃을 조금 추가하면 문제가 어느정도 해결할 수 있습니다.
 
     Q: I play tennis. What do I play ?
     A: I'm going to get laid.
