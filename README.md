@@ -1,11 +1,11 @@
-## Overview
+## 간단한 설명
 
-This is the code for [this](https://youtu.be/PXJtFc8DjsE) video on Youtube by Siraj Raval on Chatbots for Marketing. 
+이 코드는 Siraj Raval 의 유투브 비디오 ["마케팅을 위한 챗봇"](https://youtu.be/PXJtFc8DjsE)에 설명 된 코드입니다.
 
 # Deep Q&A
 [![Join the chat at https://gitter.im/chatbot-pilots/DeepQA](https://badges.gitter.im/chatbot-pilots/DeepQA.svg)](https://gitter.im/chatbot-pilots/DeepQA?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-#### Table of Contents
+#### 목차
 
 * [Presentation](#presentation)
 * [Installation](#installation)
@@ -19,18 +19,18 @@ This is the code for [this](https://youtu.be/PXJtFc8DjsE) video on Youtube by Si
 
 ## Presentation
 
-This work tries to reproduce the results of [A Neural Conversational Model](http://arxiv.org/abs/1506.05869) (aka the Google chatbot). It uses a RNN (seq2seq model) for sentence predictions. It is done using python and TensorFlow.
+이 프로젝트는[A Neural Conversational Model](http://arxiv.org/abs/1506.05869) (혹은 구글 챗봇)의 결과를 재현합니다. 순환신경망(RNN의 seq2seq 모델)을 통해 다음 문장을 예측합니다. 파이썬 및 텐서플로우를 사용합니다.
 
-The loading corpus part of the program is inspired by the Torch [neuralconvo](https://github.com/macournoyer/neuralconvo) from [macournoyer](https://github.com/macournoyer).
+프로그램에서 말뭉치를 로딩하는 부분은 [macournoyer](https://github.com/macournoyer)의 Torch [neuralconvo](https://github.com/macournoyer/neuralconvo)에서 영감을 얻었습니다.
 
-For now, DeepQA support the following dialog corpus:
- * [Cornell Movie Dialogs](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) corpus (default). Already included when cloning the repository.
- * [OpenSubtitles](http://opus.lingfil.uu.se/OpenSubtitles.php) (thanks to [Eschnou](https://github.com/eschnou)). Much bigger corpus (but also noisier). To use it, follow [those instructions](data/opensubs/) and use the flag `--corpus opensubs`.
- * Supreme Court Conversation Data (thanks to [julien-c](https://github.com/julien-c)). Available using `--corpus scotus`. See the [instructions](data/scotus/) for installation.
- * [Ubuntu Dialogue Corpus](https://arxiv.org/abs/1506.08909) (thanks to [julien-c](https://github.com/julien-c)). Available using `--corpus ubuntu`. See the [instructions](data/ubuntu/) for installation.
- * Your own data (thanks to [julien-c](https://github.com/julien-c)) by using a simple custom conversation format (See [here](data/lightweight) for more info).
+현재 DeepQA는 다음과 같은 대화 말뭉치를 지원합니다:
+ * [코넬 영화 대사](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) 말뭉치 (기본). 이 저장소를 복제하시면 자동으로 포함됩니다.
+ * [OpenSubtitles](http://opus.lingfil.uu.se/OpenSubtitles.php) ([Eschnou](https://github.com/eschnou)에게 감사드립니다). (잡음이 더 많지만) 훨씬 큰 말뭉치입니다. 사용하려면 [다음 사용법](data/opensubs/) 을 보시고 `--corpus opensubs`를 쓰세요.
+ * 대법원 대화 자료 ([julien-c](https://github.com/julien-c)에게 감사드립니다). `--corpus scotus`를 쓰시면 사용 가능합니다. See the [instructions](data/scotus/) for installation.
+ * [우분투 대화 말뭉치](https://arxiv.org/abs/1506.08909) ([julien-c](https://github.com/julien-c)에게 감사드립니다). `--corpus ubuntu`를 쓰시면 사용 가능합니다. 다음 [사용법](data/ubuntu/)을 보고 설치하실 수 있습니다.
+ * 여러분의 데이터([julien-c](https://github.com/julien-c)에게 감사드립니다)를 다음과 같은 [간단한 대화형식](data/lightweight)으로 쓰실 수 있습니다.
 
-To speedup the training, it's also possible to use pre-trained word embeddings (thanks to [Eschnou](https://github.com/eschnou)). More info [here](data/embeddings).
+학습의 속도를 올리기 위해 미리 학습된 단어 임베딩([Eschnou](https://github.com/eschnou)에게 감사드립니다)를 쓸 수 있습니다. [](data/embeddings).
 
 ## Installation
 
