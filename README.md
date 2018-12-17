@@ -34,9 +34,9 @@
 ## 설치
 
 이 프로그램은 다음과 같은 의존성을 요구합니다 (pip을 통해 쉽게 설치하실 수 있습니다: `pip3 install -r requirements.txt`):
- * 파이썬 3.5
- * 텐서플로우 (v1.0로 실행되었습니다)
- * 넘파이
+ * python 3.5
+ * tensorflow (v1.0로 실행되었습니다)
+ * numpy
  * CUDA (GPU 사용 목적)
  * nltk (문장의 토큰화를 위한 자연어 처리 툴킷)
  * tqdm (진행 표시줄 목적)
