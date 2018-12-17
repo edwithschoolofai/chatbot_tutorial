@@ -1,6 +1,6 @@
-## 간단한 설명
+## 개요
 
-이 코드는 Siraj Raval의 유튜브 비디오 ["마케팅을 위한 챗봇"](https://youtu.be/PXJtFc8DjsE)에 설명 된 코드입니다.
+이 코드는 Siraj Raval의 유튜브 비디오 ["마케팅을 위한 챗봇"](https://youtu.be/PXJtFc8DjsE)에 대한 코드입니다.
 
 # Deep Q&A
 [![Join the chat at https://gitter.im/chatbot-pilots/DeepQA](https://badges.gitter.im/chatbot-pilots/DeepQA.svg)](https://gitter.im/chatbot-pilots/DeepQA?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -18,18 +18,18 @@
 
 ## 소개
 
-이 프로젝트는 [A Neural Conversational Model](http://arxiv.org/abs/1506.05869)(혹은 구글 챗봇)의 결과를 재현합니다. 순환신경망(RNN의 seq2seq 모델)을 통해 다음 문장을 예측하실 수 있으며, 파이썬과 텐서플로우를 사용합니다.
+이 프로젝트는 [A Neural Conversational Model](http://arxiv.org/abs/1506.05869)(혹은 구글 챗봇)의 결과를 재현합니다. 순환 신경망(seq2seq 모델)을 통해 다음 문장을 예측할 수 있으며, 파이썬과 텐서플로를 사용합니다.
 
 프로그램에서 말뭉치를 로딩하는 부분은 [macournoyer](https://github.com/macournoyer)의 Torch [neuralconvo](https://github.com/macournoyer/neuralconvo)에서 변형하였습니다.
 
 현재 DeepQA는 다음과 같은 대화 말뭉치를 지원합니다.
  * [코넬 영화 대사](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) 말뭉치(기본). 이 저장소를 복제하시면 자동으로 포함됩니다.
- * [OpenSubtitles](http://opus.lingfil.uu.se/OpenSubtitles.php)([Eschnou](https://github.com/eschnou)에게 감사드립니다). (잡음이 더 많지만) 훨씬 큰 말뭉치입니다. 사용하려면 [다음 사용법](data/opensubs/)을 보시고 `--corpus opensubs`를 쓰세요.
+ * [OpenSubtitles](http://opus.lingfil.uu.se/OpenSubtitles.php)([Eschnou](https://github.com/eschnou)에게 감사드립니다). (잡음이 더 많지만) 훨씬 큰 말뭉치입니다. 사용하려면 다음 [사용법](data/opensubs/)을 보시고 `--corpus opensubs` 플래그를 사용하세요.
  * 대법원 대화 자료 ([julien-c](https://github.com/julien-c)에게 감사드립니다). `--corpus scotus`를 쓰시면 사용 가능합니다. [사용법](data/scotus/)을 보시고 설치하세요.
  * [우분투 대화 말뭉치](https://arxiv.org/abs/1506.08909)([julien-c](https://github.com/julien-c)에게 감사드립니다). `--corpus ubuntu`를 쓰시면 사용 가능합니다. 다음 [사용법](data/ubuntu/)을 보고 설치하실 수 있습니다.
- * 여러분의 데이터([julien-c](https://github.com/julien-c)에게 감사드립니다)를 다음과 같은 [간단한 대화형식](data/lightweight)으로 쓰실 수 있습니다.
+ * 여러분의 데이터([julien-c](https://github.com/julien-c)에게 감사드립니다)를 [다음](data/lightweight)과 같은 간단한 대화형식으로 쓰실 수 있습니다.
 
-학습의 속도를 올리기 위해 미리 학습된 단어 임베딩([Eschnou](https://github.com/eschnou)에게 감사드립니다)을 사용할 수도 있습니다. [더 보기](data/embeddings).
+학습의 속도를 올리기 위해 미리 학습된 단어 임베딩([Eschnou](https://github.com/eschnou)에게 감사드립니다)을 사용할 수도 있습니다. [더 보기](data/embeddings)
 
 ## 설치
 
@@ -41,7 +41,7 @@
  * nltk (문장의 토큰화를 위한 자연어 처리 툴킷)
  * tqdm (진행 표시줄 목적)
 
-nltk의 작동을 위해 추가 의존성을 설치해야 하실 수 있습니다.
+nltk의 작동을 위해 추가 의존성을 설치해야할 수 있습니다.
 
 ```
 python3 -m nltk.downloader punkt
@@ -50,7 +50,7 @@ python3 -m nltk.downloader punkt
 코넬 데이터 세트는 이미 포함되어 있습니다. 다른 데이터 세트는 데이터 폴더(`data/`)내 readme를 참고하시기 바랍니다.
 
 웹 인터페이스를 사용하시기 위해 다음 패키지가 필요합니다:
- * 장고 (v1.10로 실행되었습니다)
+ * django (v1.10로 실행되었습니다)
  * channels
  * Redis ([여기](http://redis.io/topics/quickstart)를 참고하세요)
  * asgi_redis (v1.0 이상)
@@ -64,11 +64,11 @@ python3 -m nltk.downloader punkt
 `main.py`를 실행하시면 모델을 학습시키실 수 있습니다. 학습 후 `main.py --test` (결과는 'save/model/samples_predictions.txt'에 저장됩니다) 나 `main.py --test interactive` (더 재미있습니다)를 통해 결과를 확인하실 수 있습니다.
 
 도움이 될만한 플래그를 정리해 보았습니다. 더 많은 옵션을 알아보고 싶거나 도움이 필요하면 `python main.py -h`를 사용하세요:
- * `--modelTag <name>`: 현 모델의 학습/테스트 버젼 구분을 위해 이름을 바꿀 수 있습니다.
+ * `--modelTag <name>`: 현 모델의 학습/테스트 버전 구분을 위해 이름을 바꿀 수 있습니다.
  * `--keepAll`: 테스트 단계에서 스텝별 예측(학습이 진행되며 프로그램이 이름과 나이를 바꾸는 것이 재미있을 수 있습니다)을 보시고 싶으실 경우 학습 단계에서 사용하세요. 경고 : `--saveEvery`를 높이지 않으면 저장 공간을 많이 차지할 수 있습니다.
- * `--filterVocab 20` 또는 `--vocabularySize 30000`: 어휘 크기를 제한하여 퍼포멘스와 메모리 사용을 최적화 하실 수 있습니다. 20회 미만 사용된 단어를 `<unknown>` 토큰으로 대체하시고 최대 어휘 크기를 설정하세요.
- * `--verbose`: 테스트 단계에서 때 매 문장이 계산되는 즉시 출력됩니다.
- * `--playDataset`: 데이터 세트의 대화 샘플을 보여줍니다(수행 하실 유일한 명령일 경우 `--createDataset` 와 함께 사용하실 수 있습니다).
+ * `--filterVocab 20` 또는 `--vocabularySize 30000`: 어휘 크기를 제한하여 퍼포멘스와 메모리 사용을 최적화할 수 있습니다. 20회 미만 사용된 단어를 `<unknown>` 토큰으로 대체하고 최대 어휘 크기를 설정하세요.
+ * `--verbose`: 테스트 단계에서 매 문장이 계산되는 즉시 출력됩니다.
+ * `--playDataset`: 데이터 세트의 대화 샘플을 보여줍니다(실행할 유일한 명령일 경우 `--createDataset`와 함께 사용할 수 있습니다).
 
 [텐서보드](https://www.tensorflow.org/how_tos/summaries_and_tensorboard/)를 통해 계산 그래프와 비용을 보시려면 `tensorboard --logdir save/`를 실행하세요.
 
@@ -76,7 +76,7 @@ python3 -m nltk.downloader punkt
 
 ### 웹 인터페이스
 
-학습 한 후 더 친숙한 인터페이스를 통해 프로그램과 채팅이 가능합니다. 서버는 `save/model-server/model.ckpt`에 저장된 모델을 사용할 것입니다. 처음 사용하실 때 다음과 같이 환경 설정을 하시면 됩니다:
+학습 한 후 더 친숙한 인터페이스를 통해 프로그램과 채팅이 가능합니다. 서버는 `save/model-server/model.ckpt`에 저장된 모델을 사용할 것입니다. 처음 사용하실 때 다음과 같이 설정합니다:
 
 ```bash
 export CHATBOT_SECRET_KEY="my-secret-key"
@@ -85,7 +85,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-로컬 서버에서 론치하실 경우 다음 명령어를 입력하세요:
+로컬 서버에서 실행할 경우 다음 명령어를 입력하세요:
 
 ```bash
 cd chatbot_website/
@@ -93,13 +93,13 @@ redis-server &  # Launch Redis in background
 python manage.py runserver
 ```
 
-서버 론치 후, [http://localhost:8000/](http://localhost:8000/)에서 인터페이스를 보실 수 있습니다. 프로그램을 서버에서 디플로이 하려면 `python manage.py runserver 0.0.0.0`을 실행하세요. [더보기](https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/).
+서버 실행 후, [http://localhost:8000/](http://localhost:8000/)에서 인터페이스를 보실 수 있습니다. 프로그램을 서버에 배포하려면 `python manage.py runserver 0.0.0.0`을 실행하세요. [더보기](https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/)
 
 [![Chatbot web interface](chatbot_miniature.png)](http://e-pot.xyz/cv/chatbot.png)
 
 ## 결과
 
-신기하게도, 한 두 시간만 학습 (GeForce GT 740로 학습)을 해도 어느정도의 결과를 얻을 수 있습니다. 단 시간에 이러한 결과를 얻으려면 입력 시퀀스의 단어를 5개로, 출력을 3개(`go`와 `eos`토큰 또한 추가로 포함)로 제한하고 작은 임베딩 사이즈(대략 25)를 사용해야 합니다. 이후 출력값과 입력값이 어느정도 비슷한 길이가 되도록 코드를 수정했지만 [이 버젼](https://github.com/Conchylicultor/DeepQA/tree/92863e2929580818f866f16969909fe2093d41d1)을 통해 처음 결과를 재현하실 수 있습니다.
+놀랍게도, 한두 시간만 학습(GeForce GT 740 사용)을 해도 어느 정도의 결과를 얻을 수 있습니다. 단시간에 이러한 결과를 얻으려면 입력 시퀀스의 단어를 5개로, 출력을 3개(`go`와 `eos`토큰 또한 추가로 포함)로 제한하고 작은 임베딩 사이즈(대략 25)를 사용해야 합니다. 이후 출력값과 입력값의 길이가 같아지도록 코드를 수정했지만 [이 버전](https://github.com/Conchylicultor/DeepQA/tree/92863e2929580818f866f16969909fe2093d41d1)을 통해 처음 결과를 재현하실 수 있습니다.
 물론, 이러한 초기 단계의 네트워크는 아직 많은 대화를 할 수 없습니다:
 
     Q: Hi (안녕)
@@ -111,7 +111,7 @@ python manage.py runserver
     Q: What does that mean ? (그게 무슨 뜻이야?)
     A: I dunno. (나도 몰라.)
 
-    Q: How old are you ? (몇 살 이니?)
+    Q: How old are you ? (몇 살이니?)
     A: thirty-five. (서른 다섯.)
 
     Q: Will Google hire me ? (구글이 나를 채용할까?)
@@ -134,13 +134,13 @@ python manage.py runserver
     Q: What is cooking ? (요리가 뭐야?)
     A: A channel. (채널.)
 
-    Q: Can you say no ? (아니라고 할 수 있니?)
+    Q: Can you say no ? (아니라고 말할 수 있니?)
     A: No. (아니.)
 
     Q: Two plus two (2 더하기 2)
     A: Manny... (마않은...)
 
-문장이 길어질수록 네트워크는 훨씬 느리게 학습됩니다. 네트워크를 maxLength = 10으로 250000회 학습한 후에도 대부분 회피형 응답(예: 개방형 질문에 '잘 모르겠습니다'로 대답)을 합니다. 하지만 근본적인 의미를 어느정도 파악한 것으로 보입니다.
+문장이 길어질수록 네트워크는 훨씬 느리게 학습됩니다. 네트워크를 maxLength=10으로 250,000회 학습한 후에도 대부분 회피형 응답(예: 개방형 질문에 '잘 모르겠습니다'로 대답)을 합니다. 하지만 근본적인 의미를 어느정도 파악한 것으로 보입니다.
 
     Q: When are the fireworks ? (불꽃놀이 언제해?)
     A: Tomorrow. (내일.)
@@ -161,12 +161,12 @@ python manage.py runserver
     A: The old man. (그 노인.)
 
     Q: Who is Jenny ? (제니가 누구야?)
-    A: The man who killed herself. (스스로 자살한 남자야.)
+    A: The man who killed herself. (그녀 스스로 자살한 남자야.)
 
     Q: When were you born ? (언제 태어났니?)
     A: Soon. (곧.)
 
-마지막 질문에서 볼 수 있듯이, 네트워크는 성별과 현재/미래를 아직 구분하기 어려워합니다. 더 심도있는 철학적인 질문 또한 어느정도 비슷한 결과를 보입니다.
+마지막 질문에서 볼 수 있듯이, 네트워크는 성별과 현재/미래를 아직 구분하기 어려워합니다. 더 심도있는 철학적인 질문 또한 어느 정도 비슷한 결과를 보입니다.
 
     Q: What is the purpose of being intelligent ? (지능의 목적은 뭘까?)
     A: The man are obsolete. (인간은 구식이야.)
@@ -181,7 +181,7 @@ python manage.py runserver
     A: It 's private. (사적이야.)
 
     Q: What happens if machines can think ? (기계가 생각할 수 있다면 어떻게 될까?)
-    A: I think I'll just lie with you. (그냥 너한테 거짓말 하기로 했어.)
+    A: I think I'll just lie with you. (그냥 너한테 거짓말하기로 했어.)
 
 이 모델은 임베딩 사이즈와 학습용 말뭉치 크기에 의해 상당히 제한됩니다. 모델의 '생각할 수 있는 벡터'가 너무 작아서 다음과 같은 질문에 제한된 답을 제공하는 것으로 보입니다.
 
@@ -197,10 +197,10 @@ python manage.py runserver
     Q: How many legs does a spider have ? (거미는 다리가 몇 개 있어?)
     A: Four. (네 개.)
 
-    Q: Do you prefer football or soccer ? (풋볼이 더 좋아 축구가 더 좋아?)
+    Q: Do you prefer football or soccer ? (풋볼과 축구 중에 뭐가 더 좋아?)
     A: Whiskey. (위스키.)
 
-또한 때로 질문과 무관한 답을 하는것으로 보아, 학습 과정에서 오버피팅이 되는 것으로 보입니다. 드롭 아웃을 조금 추가하면 문제가 어느정도 해결될 수 있습니다.
+또한 때로 질문과 무관한 답을 하는것으로 보아, 학습 과정에서 오버피팅이 되는 것으로 보입니다. 드롭 아웃을 조금 추가하면 문제가 어느 정도 해결될 수 있습니다.
 
     Q: I play tennis. What do I play ? (나 테니스 할꺼야. 내가 뭐 한다고?)
     A: I'm going to get laid. (나 잠자리 가질거야.)
@@ -212,27 +212,27 @@ python manage.py runserver
 
 기본 말뭉치에 의해 미리 학습된 [모델](https://drive.google.com/file/d/0Bw-phsNSkq23OXRFTkNqN0JGUU0/view?usp=sharing)을 사용하실 수 있습니다. 다음과 같이 사용하실 수 있습니다:
  1. `DeepQA/save/` 내부 zip 파일의 압축을 풉니다.
- 2. `save/model-pretrainedv2/dataset-cornell-old-lenght10-filter0-vocabSize0.pkl`에서 전처리 된 데이터 세트를 `data/samples/`로 복사합니다.
+ 2. `save/model-pretrainedv2/dataset-cornell-old-lenght10-filter0-vocabSize0.pkl`에서 전처리 된 데이터셋을 `data/samples/`로 복사합니다.
  3. `./main.py --modelTag pretrainedv2 --test interactive`를 실행합니다.
 
-Nicholas C.의 도움으로, [여기서](https://drive.google.com/drive/folders/0Bw-phsNSkq23c29ZQ2N6X3lyc1U?usp=sharing) ([오리지널](https://mcastedu-my.sharepoint.com/personal/nicholas_cutajar_a100636_mcast_edu_mt/_layouts/15/guestaccess.aspx?folderid=077576c4cf9854642a968f67909380f45&authkey=AVt2JWMPkf2R_mWBpI1eAUY)) 다양한 데이터 세트를 위한 미리 학습 된 모델(텐서플로우 v1.2와 호환가능)을 사용하실 수 있습니다. 이 폴더는 전처리 된 Cornell, OpenSubtitles, Ubuntu and Scotus 데이터 세트가 포함되어 있습니다 (`data/samples/`으로 옮기기 위해서요). 직접 데이터 세트를 처리하고 싶지 않으실 경우 사용하실 수 있습니다.
+Nicholas C.의 도움으로, [여기서](https://drive.google.com/drive/folders/0Bw-phsNSkq23c29ZQ2N6X3lyc1U?usp=sharing) ([원본](https://mcastedu-my.sharepoint.com/personal/nicholas_cutajar_a100636_mcast_edu_mt/_layouts/15/guestaccess.aspx?folderid=077576c4cf9854642a968f67909380f45&authkey=AVt2JWMPkf2R_mWBpI1eAUY)) 다양한 데이터셋을 위한 미리 학습 된 모델(텐서플로 v1.2와 호환 가능)을 사용하실 수 있습니다. 이 폴더에는 전처리 된 Cornell, OpenSubtitles, Ubuntu and Scotus 데이터셋이 포함되어 있습니다 (`data/samples/`으로 옮기기 위해서요). 직접 데이터셋을 처리하고 싶지 않으실 경우 사용하실 수 있습니다.
 
 성능이 좋은 GPU를 사용하신다면 변수나 말뭉치를 간단히 조정하여 더 좋은 모델로 학습시킬 수 있습니다. 제 경험으로는 학습률이나 드롭아웃 비율이 결과에 가장 큰 영향을 미치는 것으로 보였습니다. 혹시 모델을 공유하고 싶으시다면 부담 없이 저에게 연락하세요. 여기에 모델을 공유하겠습니다.
 
 ## 발전 가능성
 
 
-모델의 크기나 깊이 외 다양한 방법으로 시도해 보실 수 있습니다. 구현하시면 부담 없이 pull request를 보내주세요. 다음과 같은 예시 아이디어들이 있습니다:
+모델의 크기나 깊이 외에도 다양한 방법으로 시도해 보실 수 있습니다. 구현하시면 부담 없이 pull request를 보내주세요. 다음과 같은 예시 아이디어들이 있습니다:
 
-*  현 모델의 예측은 결정론적이므로(가장 가능성이 높은 대답을 출력) 똑같은 질문에 항상 동일한 대답을 할 것입니다. 샘플링 메커니즘을 추가한다면 훨신 다양하고 (더 재미있을 수 있는) 답을 제공할 제공할 수 있습니다. 가장 쉬운방법은 SoftMax 확률 분포에서 예측 된 다음 단어를 샘플링 하는 것입니다. `tf.nn.seq2seq.rnn_decoder`의`loop_function`을 사용하면 많이 어렵지 않을 것입니다. 이 후 SoftMax를 가지고 실험하시며 더 보수적이거나 신기한 예측을 생성시킬 수 있습니다.
+*  현 모델의 예측은 결정론적이므로(가장 가능성이 높은 대답을 출력) 똑같은 질문에 항상 동일한 대답을 할 것입니다. 샘플링 메커니즘을 추가한다면 훨신 다양하고 (더 재미있을 수 있는) 답을 제공할 수 있습니다. 가장 쉬운방법은 SoftMax 확률 분포에서 예측 된 다음 단어를 샘플링 하는 것입니다. `tf.nn.seq2seq.rnn_decoder`의`loop_function`을 사용하면 많이 어렵지 않을 것입니다. 이 후 SoftMax를 가지고 실험하시며 더 보수적이거나 신기한 예측을 생성시킬 수 있습니다.
 
 * 어텐션을 추가하면 더 긴 문장에 특히 더 예측을 향상시킬 수 있습니다. 'embedding_rnn_seq2seq`을 `model.py`의 `embedding_attention_seq2seq`로 바꾸면 간단합니다.
 
 
-* 데이터가 많으면 보통 더 결과가 좋습니다. 더 큰 말뭉치에 학습을 시키는 것이기 때문입니다. [Reddit 댓글 데이터 세트] (https://www.reddit.com/r/datasets/comments/59039y/updated_reddit_comment_dataset_up_to_201608/)는 현재 가장 큰 말뭉치로 보입니다 (이 프로그램에 사용하기엔 크기가 커서 부적절합니다). 혹은 말뭉치를 만들 때 각 학습 샘플의 문장을 나눠서 데이터 세트의 크기를 인위적으로 늘릴수있습니다 (예: 샘플 '질문:문장 1. 문장 2 => 답변: 문장 X. 문장 Y'로 셈플 세 개를 만들 수 있습니다: '질문: 문장1. 문장 2 => 답변:문장 X', '질문:문장 2 => 답변:문장 X. 문장 Y', '질문:문장 2 => 답변:문장 X') 경고 : '질문:문장 1. => 답변:문장 X.'와 같은 조합은 '2 => X' 처럼 질문에서 답변으로의 전환을 깨뜨리기 때문에 작동되지 않습니다)
+* 데이터가 많으면 보통 더 결과가 좋습니다. 더 큰 말뭉치에 학습을 시키는 것이기 때문입니다. [Reddit 댓글 데이터셋](https://www.reddit.com/r/datasets/comments/59039y/updated_reddit_comment_dataset_up_to_201608/)이 현재 가장 큰 말뭉치로 보입니다 (이 프로그램에 사용하기엔 크기가 커서 부적절합니다). 혹은 말뭉치를 만들 때 각 학습 샘플의 문장을 나눠서 데이터셋의 크기를 인위적으로 늘릴수있습니다 (예: 샘플 `Q:문장 1. 문장 2 => A: 문장 X. 문장 Y`로 샘플 세 개를 만들 수 있습니다: `Q: 문장1. 문장 2 => A:문장 X`, `Q:문장 2 => A:문장 X. 문장 Y`, `Q:문장 2 => A:문장 X`. 경고 : `Q:문장 1. => A:문장 X.`와 같은 조합은 `2 => X` 처럼 질문에서 답변으로의 전환을 깨뜨리기 때문에 작동되지 않습니다)
 * 테스트 곡선은 제 [음악 생성](https://github.com/Conchylicultor/MusicGenerator) 프로젝트에서처럼 모니터 되는 것이 좋습니다. 이럴 경우 드롭아웃이 오버피팅에 미치는 효과를 관찰하실 수 있습니다. 일단은 단순히 각 학습 스텝에서 예측된 결과를 체크하며 진행합니다. 
-* 현재 모든 질문은 서로 독립적입니다. 질문을 서로 연결하려면 대답을하기 전에 이전 질문을 모두 입력하고 인코더가 응답하게 하는 것이 가장 간단합니다. 마지막 엔코더에서 캐시를 저장하면 매번 다시 계산하지 않으셔도 됩니다. 정확성을 높이려면 개별 질문/대답 보다는 전체 대화를 학습시키는 것이 좋습니다. 또한 이전 대화를 인코더에 입력할 때 '<Q'>, '<A>' 토큰을 추가한다면 인코더가 화자가 바뀔 때를 파악할 수 있습니다. 간단한 seq2seq 모델이 문장 사이의 장기 의존성을 포착하기 충분할지는 모르겠습니다. 비슷한 길이의 입력 문장을 그룹화하는 버킷 시스템을 추가하면 학습 속도가 크게 향상 될 수 있습니다.
+* 현재 모든 질문은 서로 독립적입니다. 질문을 서로 연결하려면 대답을 하기 전에 이전 질문을 모두 입력하고 인코더가 응답하게 하는 것이 가장 간단합니다. 마지막 인코더에서 캐시를 저장하면 매번 다시 계산하지 않아도 됩니다. 정확성을 높이려면 개별 질문/대답 보다는 전체 대화를 학습시키는 것이 좋습니다. 또한 이전 대화를 인코더에 입력할 때 `<Q>`, `<A>` 토큰을 추가한다면 인코더가 화자가 바뀔 때를 파악할 수 있습니다. 간단한 seq2seq 모델이 문장 사이의 장기 의존성을 포착하기 충분할지는 모르겠습니다. 비슷한 길이의 입력 문장을 그룹화하는 버킷 시스템을 추가하면 학습 속도가 크게 향상 될 수 있습니다.
    
 ## 감사의 말 
 
-[conchylucultor](https://github.com/Conchylicultor/DeepQA)에 감사의 말씀을 전합니다. 이 코드는 제가 조금만 변형한 것입니다.
+[Conchylucultor](https://github.com/Conchylicultor/DeepQA)에 감사의 말씀을 전합니다. 이 코드는 제가 조금만 변형한 것입니다.
