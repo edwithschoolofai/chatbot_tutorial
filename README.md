@@ -1,6 +1,6 @@
 ## 개요
 
-이 코드는 Siraj Raval의 유튜브 비디오 ["마케팅을 위한 챗봇"](https://youtu.be/PXJtFc8DjsE)에 대한 코드입니다.
+이 코드는 Siraj Raval의 유튜브 영상 ["마케팅을 위한 챗봇"](https://youtu.be/PXJtFc8DjsE)에 대한 코드입니다.
 
 # Deep Q&A
 [![Join the chat at https://gitter.im/chatbot-pilots/DeepQA](https://badges.gitter.im/chatbot-pilots/DeepQA.svg)](https://gitter.im/chatbot-pilots/DeepQA?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -18,22 +18,22 @@
 
 ## 소개
 
-이 프로젝트는 [A Neural Conversational Model](http://arxiv.org/abs/1506.05869)(혹은 구글 챗봇)의 결과를 재현합니다. 순환 신경망(seq2seq 모델)을 통해 다음 문장을 예측할 수 있으며, 파이썬과 텐서플로를 사용합니다.
+이 프로젝트는 [A Neural Conversational Model](http://arxiv.org/abs/1506.05869)(혹은 구글 챗봇)의 결과를 재현합니다. 순환 신경망(seq2seq 모델)을 통해 다음 문장을 예측할 수 있으며, 파이썬과 텐서플로우를 사용합니다.
 
 프로그램에서 말뭉치를 로딩하는 부분은 [macournoyer](https://github.com/macournoyer)의 Torch [neuralconvo](https://github.com/macournoyer/neuralconvo)에서 변형하였습니다.
 
 현재 DeepQA는 다음과 같은 대화 말뭉치를 지원합니다.
- * [코넬 영화 대사](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) 말뭉치(기본). 이 저장소를 복제하시면 자동으로 포함됩니다.
- * [OpenSubtitles](http://opus.lingfil.uu.se/OpenSubtitles.php)([Eschnou](https://github.com/eschnou)에게 감사드립니다). (잡음이 더 많지만) 훨씬 큰 말뭉치입니다. 사용하려면 다음 [사용법](data/opensubs/)을 보시고 `--corpus opensubs` 플래그를 사용하세요.
+ * [코넬 대학 영화 대사](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) 말뭉치(기본). 이 저장소를 Clone하시면 자동으로 포함됩니다.
+ * [OpenSubtitles](http://opus.lingfil.uu.se/OpenSubtitles.php)([Eschnou](https://github.com/eschnou)에게 감사드립니다). (노이즈가 더 많지만) 훨씬 큰 말뭉치입니다. 사용하려면 다음 [사용법](data/opensubs/)을 보시고 `--corpus opensubs` 플래그를 사용하세요.
  * 대법원 대화 자료 ([julien-c](https://github.com/julien-c)에게 감사드립니다). `--corpus scotus`를 쓰시면 사용 가능합니다. [사용법](data/scotus/)을 보시고 설치하세요.
  * [우분투 대화 말뭉치](https://arxiv.org/abs/1506.08909)([julien-c](https://github.com/julien-c)에게 감사드립니다). `--corpus ubuntu`를 쓰시면 사용 가능합니다. 다음 [사용법](data/ubuntu/)을 보고 설치하실 수 있습니다.
  * 여러분의 데이터([julien-c](https://github.com/julien-c)에게 감사드립니다)를 [다음](data/lightweight)과 같은 간단한 대화형식으로 쓰실 수 있습니다.
 
-학습의 속도를 올리기 위해 미리 학습된 단어 임베딩([Eschnou](https://github.com/eschnou)에게 감사드립니다)을 사용할 수도 있습니다. [더 보기](data/embeddings)
+학습 속도를 올리기 위해 미리 학습된 단어 임베딩([Eschnou](https://github.com/eschnou)에게 감사드립니다)을 사용할 수도 있습니다. [더 보기](data/embeddings)
 
 ## 설치
 
-이 프로그램은 다음과 같은 의존성을 요구합니다 (pip을 통해 쉽게 설치하실 수 있습니다: `pip3 install -r requirements.txt`):
+이 프로그램은 다음과 같은 의존성이 필요합니다 (pip을 통해 쉽게 설치하실 수 있습니다: `pip3 install -r requirements.txt`):
  * python 3.5
  * tensorflow (v1.0로 실행되었습니다)
  * numpy
@@ -41,7 +41,7 @@
  * nltk (문장의 토큰화를 위한 자연어 처리 툴킷)
  * tqdm (진행 표시줄 목적)
 
-nltk의 작동을 위해 추가 의존성을 설치해야할 수 있습니다.
+nltk의 작동을 위해 추가 라이브러리를 설치해야할 수 있습니다.
 
 ```
 python3 -m nltk.downloader punkt
@@ -65,7 +65,7 @@ python3 -m nltk.downloader punkt
 
 도움이 될만한 플래그를 정리해 보았습니다. 더 많은 옵션을 알아보고 싶거나 도움이 필요하면 `python main.py -h`를 사용하세요:
  * `--modelTag <name>`: 현 모델의 학습/테스트 버전 구분을 위해 이름을 바꿀 수 있습니다.
- * `--keepAll`: 테스트 단계에서 스텝별 예측(학습이 진행되며 프로그램이 이름과 나이를 바꾸는 것이 재미있을 수 있습니다)을 보시고 싶으실 경우 학습 단계에서 사용하세요. 경고 : `--saveEvery`를 높이지 않으면 저장 공간을 많이 차지할 수 있습니다.
+ * `--keepAll`: 테스트 단계에서 스텝별 예측(학습이 진행되며 프로그램이 이름과 나이를 바꾸는 것이 재미있을 수 있습니다)을 보고 싶으실 경우 학습 단계에서 사용하세요. 경고 : `--saveEvery`를 높이지 않으면 저장 공간을 많이 차지할 수 있습니다.
  * `--filterVocab 20` 또는 `--vocabularySize 30000`: 어휘 크기를 제한하여 퍼포멘스와 메모리 사용을 최적화할 수 있습니다. 20회 미만 사용된 단어를 `<unknown>` 토큰으로 대체하고 최대 어휘 크기를 설정하세요.
  * `--verbose`: 테스트 단계에서 매 문장이 계산되는 즉시 출력됩니다.
  * `--playDataset`: 데이터 세트의 대화 샘플을 보여줍니다(실행할 유일한 명령일 경우 `--createDataset`와 함께 사용할 수 있습니다).
@@ -183,7 +183,7 @@ python manage.py runserver
     Q: What happens if machines can think ? (기계가 생각할 수 있다면 어떻게 될까?)
     A: I think I'll just lie with you. (그냥 너한테 거짓말하기로 했어.)
 
-이 모델은 임베딩 사이즈와 학습용 말뭉치 크기에 의해 상당히 제한됩니다. 모델의 '생각할 수 있는 벡터'가 너무 작아서 다음과 같은 질문에 제한된 답을 제공하는 것으로 보입니다.
+이 모델은 임베딩 사이즈와 학습용 말뭉치 크기에 따른 한계가 있습니다. 모델의 '생각할 수 있는 벡터'가 너무 작아서 다음과 같은 질문에 제한된 답을 제공하는 것으로 보입니다.
 
     Q: My name is David. What is my name ? (내 이름은 데이비드야. 내 이름이 뭐니?)
     A: Debbie. (데비.)
@@ -200,7 +200,7 @@ python manage.py runserver
     Q: Do you prefer football or soccer ? (풋볼과 축구 중에 뭐가 더 좋아?)
     A: Whiskey. (위스키.)
 
-또한 때로 질문과 무관한 답을 하는것으로 보아, 학습 과정에서 오버피팅이 되는 것으로 보입니다. 드롭 아웃을 조금 추가하면 문제가 어느 정도 해결될 수 있습니다.
+또한 때로 질문과 무관한 답을 하는것으로 보아, 학습 과정에서 오버피팅이 되는 것으로 보입니다. 드롭아웃을 조금 추가하면 문제가 어느 정도 해결될 수 있습니다.
 
     Q: I play tennis. What do I play ? (나 테니스 할꺼야. 내가 뭐 한다고?)
     A: I'm going to get laid. (나 잠자리 가질거야.)
